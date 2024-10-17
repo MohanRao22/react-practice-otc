@@ -1,8 +1,4 @@
-import React from "react";
-import  ReactDOM  from "react-dom/client";
-
-
-const allRestaurants = [
+export const allRestaurants = [
     {
       "info": {
         "id": "485445",
@@ -826,69 +822,3 @@ const allRestaurants = [
       "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food_seo"
     }
   ]
-
-const Header = ()=>{
-    return(
-        <div className="header-container">
-            <div className="logo-wrapper">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_PvLCoPdIz_A7pOEbBGg7ZZkXF-n7q3G3QQ&s" width="70" height="70" alt="logo-image" />
-            </div>
-            <div className="menu-wrapper">
-               <ul>
-                <li>Home</li>
-                <li>Cart</li>
-                <li>Contact</li>
-               </ul>
-            </div>
-        </div>
-    )
-}
-
-const Body = ()=>{
-    return(
-        <div className="body-main-wrapper">
-            <div className="search-wrapper">
-                <input type="search" placeholder="Search anything..!" />
-            </div>
-            <div className="restocard-main-wrapper">
-             {
-                allRestaurants.map((restos)=>
-                     <RestoCard restocard = {restos} />
-
-                  )
-             }
-            </div>
-        </div>
-    )
-}
-
-const RestoCard = (restaurantData)=>{
-    // console.log(restaurantData.restocard);
-    const {name, avgRating, locality, cuisines, cloudinaryImageId} = restaurantData.restocard.info;
-    return(
-        <div className="restocard-wrapper">
-            <div className="resto-image">
-            <img src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${cloudinaryImageId}`} alt="Hotel-image" width="100" height="200" />
-            </div>
-            <div className="restocard-text">
-            <h2>{name}</h2>
-            <p>{cuisines.join("--")}</p>
-            <p>{avgRating}⭐️</p>
-            <p>{locality}</p>
-            </div>
-        </div>
-    )
-}
-
-
-const AppLayout = ()=>{
-    return(
-        <div className="main-container">
-            <Header />
-            <Body />
-        </div>
-    )
-}
-
-const root = ReactDOM.createRoot(document.querySelector("#root1"));
-root.render(<AppLayout />)
