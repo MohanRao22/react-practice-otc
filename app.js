@@ -10,7 +10,7 @@ const Header = ()=>{
             <div className="menu-wrapper">
                <ul>
                 <li>Home</li>
-                <li>Services</li>
+                <li>Cart</li>
                 <li>Contact</li>
                </ul>
             </div>
