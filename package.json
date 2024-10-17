@@ -2,13 +2,23 @@
   "name": "react",
   "version": "1.0.1",
   "description": "react-practice-otc",
-  "main": "app.js",
   "scripts": {
-    "test": "Jest"
+    "test": "Jest",
+    "start-dev" : "parcel index.html",
+    "start-live" : "parcel build index.html"
+
   },
   "author": "Mohan",
   "license": "ISC",
   "devDependencies": {
-    "parcel": "^2.12.0"
-  }
+    "parcel": "^2.12.0",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "browserslist": [
+    "last 20 versions"
+  ]
 }
