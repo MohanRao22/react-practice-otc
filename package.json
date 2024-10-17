@@ -1,0 +1,14 @@
+{
+  "name": "react",
+  "version": "1.0.1",
+  "description": "react-practice-otc",
+  "main": "app.js",
+  "scripts": {
+    "test": "Jest"
+  },
+  "author": "Mohan",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.12.0"
+  }
+}
