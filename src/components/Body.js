@@ -1,52 +1,80 @@
 import RestoCard from "./RestoCard";
 import { useState } from "react";
 import { useEffect } from "react";
+import Shimmer from "./Shimmer";
 
-const Body = ()=>{
+const Body = () => {
 
-useEffect(()=>{
+    const [listOfResto, setlistOfResto] = useState([]);
+    const [filteration, setFilteration] = useState([]);
+    const [searchData, setSearchData] = useState("");
+
+  useEffect(() => {
     fetchData();
-},[]);
+  }, []);
 
-
-const fetchData = async ()=>{
-    const data =  await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.89960&lng=80.22090&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+  const fetchData = async () => {
+    const data = await fetch(
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.89960&lng=80.22090&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+    );
 
     const json = await data.json();
-    let topRestaurants = json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    let topRestaurants =
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants;
     // console.log(json.data.cards[4].card.card.gridElements.infoWithStyle.restaurants);
     setlistOfResto(topRestaurants);
-}
+    setFilteration(topRestaurants);
+  };
 
-const [listOfResto, setlistOfResto] = useState([]);
+ 
+  // console.log("Body Called");
 
-console.log("Body Called");
+  return listOfResto.length == 0 ? (
+    <Shimmer />
+  ) : (
+    <div className="body-main-wrapper">
+      <div className="search-wrapper">
+        <input
+          type="search"
+          placeholder="Search anything..!"
+          value={searchData}
+          onChange={(e) => {
+            setSearchData(e.target.value);
+          }}
+        />
+        <button className="search-things" onClick={()=>{
+    
+          
+         const filteredData = listOfResto.filter((element)=>{
+            console.log(element.info.name.toLowerCase());
+            console.log(searchData.toLowerCase());
+            return element.info.name.toLowerCase().includes(searchData.toLowerCase());
+          });
+          setFilteration(filteredData);
 
-    return(
-        <div className="body-main-wrapper">
-            <div className="search-wrapper">
-                <input type="search" placeholder="Search anything..!" />
-                <button className="filter"
-                 onClick={()=>{       
-                 const allFilteredResto =   
-                 listOfResto.filter((list)=>{
-                        return list.info.avgRating > 3.9
-                 });
-                 console.log(allFilteredResto)
-                   setlistOfResto(allFilteredResto)
-                    
-                 }}>Ratings 4+</button>
-            </div>
-            <div className="restocard-main-wrapper">
-             {
-                listOfResto.map((restos)=>
-                     <RestoCard restocard = {restos} key={restos.info.id} />
-
-                  )
-             }
-            </div>
-        </div>
-    )
-}
+        }} >Search</button>
+        <button
+          className="filter"
+          onClick={() => {
+            const allFilteredResto = listOfResto.filter((list) => {
+              return list.info.avgRating > 3.9;
+            });
+            console.log(allFilteredResto);
+            setFilteration(allFilteredResto);
+          }}
+        >
+          Ratings 4+
+        </button>
+      </div>
+      <div className="restocard-main-wrapper">
+        
+        { filteration.map((restos) => (
+          <RestoCard restocard={restos} key={restos.info.id} />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export default Body;
