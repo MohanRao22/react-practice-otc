@@ -2,6 +2,7 @@ import RestoCard from "./RestoCard";
 import { useState } from "react";
 import { useEffect } from "react";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 const Body = () => {
 
@@ -70,7 +71,7 @@ const Body = () => {
       <div className="restocard-main-wrapper">
         
         { filteration.map((restos) => (
-          <RestoCard restocard={restos} key={restos.info.id} />
+         <><Link to={"/restaurant/"+restos.info.id}> <RestoCard restocard={restos} key={restos.info.id} /> </Link></>
         ))}
       </div>
     </div>
