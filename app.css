@@ -88,6 +88,6 @@
     width: 15%;
 }
 
-.restaurant-menu-wrapper{
+.restaurant-menu-wrapper, .about-wrapper{
     margin: 50px;
 }

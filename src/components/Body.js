@@ -3,12 +3,14 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import useCustomHookOnline from "../customHooks/useCustomHookOnline.js";
 
 const Body = () => {
 
     const [listOfResto, setlistOfResto] = useState([]);
     const [filteration, setFilteration] = useState([]);
     const [searchData, setSearchData] = useState("");
+   
 
   useEffect(() => {
     fetchData();
@@ -30,6 +32,15 @@ const Body = () => {
 
  
   // console.log("Body Called");
+
+  const onlineStatusCustomHook = useCustomHookOnline();
+
+
+  if(onlineStatusCustomHook === false){
+      return ( 
+      <h1>Looks like you are offline..!</h1>
+      )
+  } 
 
   return listOfResto.length == 0 ? (
     <Shimmer />

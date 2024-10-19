@@ -1,36 +1,26 @@
 
 
-import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { useParams } from "react-router";
+import useCustomHookRestaurantMenu from "../customHooks/useCustomHookRestaurantMenu";
 
 const RestaurantMenu = ()=>{
 
     const {resId} = useParams();
-    const [renderMenu, setRenderMenu] = useState(null);
+    console.log(resId);
 
-    useEffect(()=>{
-        fetchMenu();
-    }, []);
-
-    const fetchMenu = async()=>{
-    const menuData = await fetch("https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.89960&lng=80.22090&restaurantId="+resId+"&catalog_qa=undefined&submitAction=ENTER");
-    //  224279, 330270
-    const json = await menuData.json();
-
-    console.log(json);
-    setRenderMenu(json);
-    }
-   
-     
-      if(renderMenu == null){
+    const restaurntCustomHookMenuData = useCustomHookRestaurantMenu(resId);
+    console.log(restaurntCustomHookMenuData)
+        
+      if(restaurntCustomHookMenuData == null){
         return <Shimmer />
       }
 
-      console.log(renderMenu.data)
-      const { name, cuisines } = renderMenu.data.cards[2].card?.card?.info;
-    //   const menu = renderMenu?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.categories;
-    const menu  =  renderMenu?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card?.itemCards;
+    
+      const { name, cuisines } = restaurntCustomHookMenuData?.data?.cards[2]?.card?.card?.info;
+    //   const menu = restaurntCustomHookMenuData?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.categories;
+    const menu  =  restaurntCustomHookMenuData?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card?.itemCards;
+    console.log(menu);
     if(menu == undefined){
         return (
             <div className="restaurant-menu-wrapper">
@@ -40,7 +30,7 @@ const RestaurantMenu = ()=>{
         </div>
         )
     }
-    //   console.log(renderMenu?.data?.cards[4])
+    //   console.log(restaurntCustomHookMenuData?.data?.cards[4])
 
     return(
         <div className="restaurant-menu-wrapper">

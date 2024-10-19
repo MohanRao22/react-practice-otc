@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Logo_Url } from "../utils/constant";
 
 import { Link } from "react-router-dom";
-
+import useCustomHookOnline from "../customHooks/useCustomHookOnline";
 
 const Header = ()=>{
 
     const [btnName, setBtnName] = useState("Login");
+    const onlineStatus = useCustomHookOnline();
 
     return(
         <div className="header-container">
@@ -15,6 +16,7 @@ const Header = ()=>{
             </div>
             <div className="menu-wrapper">
                <ul>
+                <li>Online Status {onlineStatus ? "🟢" : "🔴"}</li>
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/about">About</Link></li>
                 <li><Link to="/contact">Contact</Link></li>
